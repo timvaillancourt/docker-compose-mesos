@@ -1,22 +1,25 @@
 # docker-compose-mesos
 A docker-compose file for a full Mesos *(master and slave)*, Marathon and Chronos stack
 
+# Required:
+The host OS must have the following installed:
+- make
+- docker *(docker-ce is recommended instead of default OS packages)*
+- docker-compose
+
+*Note: is very likely you will need to run all 'make' commands below as 'root'*
+
 # Start
-
-*Note: 'make', 'docker-compose' and 'Docker' must already be installed*
-
 ```
 make start
 ```
 
 # Stop
-
 ```
 make stop
 ```
 
 # Cleanup
-
 *Note: this deletes all data created by the containers!*
 
 ```
