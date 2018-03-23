@@ -15,6 +15,14 @@ make start
 make stop
 ```
 
+# Cleanup
+
+*Note: this deletes all data created by the containers!*
+
+```
+make clean
+```
+
 # Docker Images
 
 The docker-compose.yml launches the following:
