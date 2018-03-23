@@ -1,6 +1,8 @@
 # docker-compose-mesos
 A docker-compose file for a full Mesos *(master and slave)*, Marathon and Chronos stack
 
+Links to the host-OS Docker daemon are passed to the 'mesos-slave', meaning Docker containers are launched alongside the docker-compose containers.
+
 # Required:
 The host OS must have the following installed:
 - make
