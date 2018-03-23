@@ -1,5 +1,5 @@
 # docker-compose-mesos
-A docker-compose file for a full Mesos, Marathon and Chronos stack
+A docker-compose file for a full Mesos *(master and slave)*, Marathon and Chronos stack
 
 # Start
 
