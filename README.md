@@ -9,6 +9,8 @@ The host OS must have the following installed:
 - docker *(docker-ce is recommended instead of default OS packages)*
 - docker-compose
 
+This project has only been tested on CentOS 7.x with Docker Community Edition packages. Your results may vary!
+
 *Note: is very likely you will need to run all 'make' commands below as 'root'*
 
 # Start
