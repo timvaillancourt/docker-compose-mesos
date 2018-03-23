@@ -38,7 +38,7 @@ The docker-compose.yml requires the following ports.
 
 *Note: change in docker-compose.yml if required*
 
-- 5050/tcp: Mesos Master
-- 5051/tcp: Mesos Slave
-- 8080/tcp: Marathon
-- 8081/tcp: Chronos
+- 5050/tcp *(http://host:5050)*: Mesos Master
+- 5051/tcp *(http://host:5051)*: Mesos Slave
+- 8080/tcp *(http://host:8080)*: Marathon
+- 8081/tcp *(http://host:8081)*: Chronos
