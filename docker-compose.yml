@@ -1,0 +1,74 @@
+version: '2'
+services:
+  zookeeper:
+    image: mesoscloud/zookeeper:3.4.8-centos-7
+    restart: always
+    volumes:
+    - "./data/zookeeper:/tmp/zookeeper"
+    environment:
+      MYID: 1
+  mesos-master:
+    image: mesosphere/mesos-master:1.5.0
+    restart: always
+    ports:
+    - "5050:5050"
+    command: "--hostname=${HOSTNAME}"
+    volumes:
+      - "./data/mesos-master/tmp:/var/tmp/mesos"
+      - "./data/mesos-master/log:/var/log/mesos"
+    environment:
+      MESOS_PORT: 5050
+      MESOS_ZK: zk://zookeeper:2181/mesos
+      MESOS_QUORUM: 1
+      MESOS_REGISTRY: in_memory
+      MESOS_LOG_DIR: /var/log/mesos
+      MESOS_WORK_DIR: /var/tmp/mesos
+    depends_on:
+    - zookeeper
+  mesos-slave1:
+    image: mesosphere/mesos-slave:1.5.0
+    restart: always
+    privileged: true
+    ports: 
+    - "5051:5051"
+    command: "--hostname=${HOSTNAME}"
+    environment:
+      MESOS_PORT: 5051
+      MESOS_MASTER: zk://zookeeper:2181/mesos
+      MESOS_SWITCH_USER: 0
+      MESOS_CONTAINERIZERS: docker
+      MESOS_ISOLATOR: cgroups/cpu,cgroups/mem
+      MESOS_SYSTEMD_ENABLE_SUPPORT: "false"
+      MESOS_LOG_DIR: /var/log/mesos
+      MESOS_WORK_DIR: /var/tmp/mesos
+    volumes:
+    - "./data/mesos-slave1/tmp:/var/tmp/mesos"
+    - "./data/mesos-slave1/log:/var/log/mesos"
+    - "/cgroup:/cgroup"
+    - "/sys:/sys"
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+    - mesos-master
+#  marathon:
+#    image: mesoscloud/marathon:1.1.1-centos-7
+#    restart: always
+#    ports:
+#    - "8080:8080"
+#    environment:
+#      MARATHON_HOSTNAME: marathon
+#      MARATHON_HTTP_ADDRESS: marathon
+#      MARATHON_MASTER: zk://zookeeper:2181/mesos
+#      MARATHON_ZK: zk://zookeeper:2181/marathon
+#    depends_on:
+#    - mesos-master
+  chronos:
+    image: mesosphere/chronos:v3.0.2
+    restart: always
+    ports:
+    - "8081:8081"
+    environment:
+      PORT0: 8081
+      PORT1: 8082
+    command: "--zk_hosts zookeeper:2181 --master zk://zookeeper:2181/mesos"
+    depends_on:
+    - mesos-master
