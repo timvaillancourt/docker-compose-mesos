@@ -2,6 +2,8 @@ all: start
 
 start:
 	docker-compose up -d
+	sleep 5
+	bash start-chronos.sh
 
 stop:
 	docker-compose down
