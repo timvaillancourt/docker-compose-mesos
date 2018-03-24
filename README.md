@@ -9,7 +9,9 @@ The host OS must have the following installed:
 - docker *(docker-ce is recommended instead of default OS packages)*
 - docker-compose
 
-You may need to whitelist the required ports *(mentioned below)* on your Docker host's firewall.
+Additionally:
+- The system hostname must be resolvable by DNS or in /etc/hosts.
+- The required ports *(mentioned below)* must be open on your Docker host's firewall.
 
 This project has only been tested on CentOS 7.x with Docker Community Edition packages. Your results may vary!
 

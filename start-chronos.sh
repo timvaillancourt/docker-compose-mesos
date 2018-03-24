@@ -7,7 +7,7 @@ while [ $tries -lt 10 ]; do
 	echo '{
 	  "id": "/chronos",
 	  "cmd": null,
-	  "cpus": 1,
+	  "cpus": 0.5,
 	  "mem": 256,
 	  "disk": 0,
 	  "instances": 1,
@@ -25,7 +25,8 @@ while [ $tries -lt 10 ]; do
 	  "command": "--zk_hosts='${HOSTNAME}':2181 --master=zk://'${HOSTNAME}':2181/mesos",
 	  "env": {
 	    "PORT0": "4040",
-	    "PORT1": "4041"
+	    "PORT1": "4041",
+	    "MESOS_WORK_DIR": "/tmp"
 	  },
 	  "portDefinitions": [
 	    {
