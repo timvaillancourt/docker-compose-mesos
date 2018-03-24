@@ -15,21 +15,21 @@ while [ $tries -lt 10 ]; do
 	    "type": "DOCKER",
 	    "volumes": [],
 	    "docker": {
-	      "image": "mesoscloud/chronos:2.4.0-centos",
+	      "image": "mesosphere/chronos:v3.0.2",
 	      "network": "HOST",
 	      "privileged": false,
 	      "parameters": [],
 	      "forcePullImage": false
 	    }
 	  },
+	  "command": "--zk_hosts='${HOSTNAME}':2181 --master=zk://'${HOSTNAME}':2181/mesos",
 	  "env": {
-	    "CHRONOS_HTTP_PORT": "4400",
-	    "CHRONOS_MASTER": "zk://'${HOSTNAME}':2181/mesos",
-	    "CHRONOS_ZK_HOSTS": "'${HOSTNAME}':2181"
+	    "PORT0": "4040",
+	    "PORT1": "4041"
 	  },
 	  "portDefinitions": [
 	    {
-	      "port": 4400,
+	      "port": 4040,
 	      "protocol": "tcp",
 	      "name": "chronos",
 	      "labels": {}
@@ -39,14 +39,17 @@ while [ $tries -lt 10 ]; do
 		--retry 3 \
 		--retry-delay 3 \
 		--header 'Content-Type: application/json' \
-	http://localhost:8080/v2/apps
+	http://${HOSTNAME}:8080/v2/apps
 
 	if [ $? -gt 0 ]; then
 		echo
-		tries=$(($tries + 1))
 		sleep 3
+		tries=$(($tries + 1))
 	else
 		echo
-		break
+		echo "# Done. Added chronos to Marathon scheduler"
+		exit 0
 	fi
 done
+echo "# Failed to add chronos to the Marathon scheduler!"
+exit 1

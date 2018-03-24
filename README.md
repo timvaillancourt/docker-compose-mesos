@@ -9,6 +9,8 @@ The host OS must have the following installed:
 - docker *(docker-ce is recommended instead of default OS packages)*
 - docker-compose
 
+You may need to whitelist the required ports *(mentioned below)* on your Docker host's firewall.
+
 This project has only been tested on CentOS 7.x with Docker Community Edition packages. Your results may vary!
 
 *Note: is very likely you will need to run all 'make' commands below as 'root'*
@@ -45,7 +47,7 @@ The docker-compose.yml requires the following ports.
 
 *Note: change in docker-compose.yml if required*
 
-- 4400/tcp *(http://host:8081)*: Chronos UI
+- 4040/tcp *(http://host:4040)*: Chronos UI
 - 5050/tcp *(http://host:5050)*: Mesos Master UI
 - 5051/tcp *(http://host:5051)*: Mesos Slave UI
 - 8080/tcp *(http://host:8080)*: Marathon UI
